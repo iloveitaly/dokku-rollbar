@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+source "$PLUGIN_PATH/common/functions"
+
+APP="$1"
+IMAGE="$2"
+HOSTNAME=$(hostname -f)
+ROLLBAR_TOKEN=$(dokku config:get "$APP" ROLLBAR_TOKEN)
+
+if [[ $ROLLBAR_TOKEN ]]; then
+  echo "-----> Notifying Rollbar ..."
+
+  URL=$(dokku url $APP)
+  ENVIRONMENT=$(dokku config:get "$APP" RACK_ENV || dokku config:get "$APP" RAILS_ENV || echo 'production')
+  REVISION=$(cd $DOKKU_ROOT/$APP && git log -n 1 --pretty=format:"%H" 2>/dev/null)
+  
+  ROLLBAR_RESULT=$(curl https://api.rollbar.com/api/1/deploy/ \
+    -F access_token=$ROLLBAR_TOKEN \
+    -F environment=$ENVIRONMENT \
+    -F revision=$REVISION \
+    -F local_username=Dokku
+  )
+
+  echo "       ${ROLLBAR_RESULT}"
+fi
