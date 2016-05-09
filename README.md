@@ -2,6 +2,8 @@
 
 Dokku Rollbar is a plugin for [Dokku](https://github.com/progrium/dokku) that notifies Rollbar of deployments.
 
+This dokku plugin could be easily modified to support other error trackers (Sentry, etc).
+
 ## Installation
 
 ```sh
@@ -21,5 +23,6 @@ No commands. If `ROLLBAR_TOKEN` is set, Rollbar will be notified of each deploy.
 
 * https://github.com/Flink/dokku-airbrake-deploy
 * https://github.com/ribot/dokku-slack
+* https://github.com/nickstenning/dokku-webhooks
 
 ## [License]
