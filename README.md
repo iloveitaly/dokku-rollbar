@@ -25,4 +25,4 @@ No commands. If `ROLLBAR_TOKEN` is set, Rollbar will be notified of each deploy.
 * https://github.com/ribot/dokku-slack
 * https://github.com/nickstenning/dokku-webhooks
 
-## [License][license]
+## (License)[]
