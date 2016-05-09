@@ -6,8 +6,8 @@ This dokku plugin could be easily modified to support other error trackers (Sent
 
 ## Installation
 
+Verified to work on dokku 0.5+, will probably work without modification on early dokku versions.
 ```sh
-# dokku 0.4+
 $ dokku plugin:install https://github.com/iloveitaly/dokku-rollbar.git
 ```
 
