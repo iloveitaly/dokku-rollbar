@@ -9,12 +9,13 @@ if [[ $ROLLBAR_TOKEN && $REVISION ]]; then
 
   ENVIRONMENT=$(dokku config:get "$APP" RACK_ENV || dokku config:get "$APP" RAILS_ENV || echo 'production')
   REVISION=$(cd $DOKKU_ROOT/$APP && git log -n 1 --pretty=format:"%H" 2>/dev/null)
+  LOCAL_USERNAME=`whoami`
 
   ROLLBAR_RESULT=$(curl -s https://api.rollbar.com/api/1/deploy/ \
     -F access_token=$ROLLBAR_TOKEN \
     -F environment=$ENVIRONMENT \
     -F revision=$REVISION \
-    -F local_username=Dokku
+    -F local_username=$LOCAL_USERNAME
   )
 
   echo "       ${ROLLBAR_RESULT}"
