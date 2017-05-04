@@ -7,7 +7,12 @@ ROLLBAR_TOKEN=$(dokku config:get "$APP" ROLLBAR_TOKEN || echo)
 if [[ $ROLLBAR_TOKEN && $REVISION ]]; then
   echo "-----> Notifying Rollbar ..."
 
-  ENVIRONMENT=$(dokku config:get "$APP" RACK_ENV || dokku config:get "$APP" RAILS_ENV || echo 'production')
+  ENVIRONMENT=$(
+    dokku config:get "$APP" ROLLBAR_ENV ||
+    dokku config:get "$APP" RACK_ENV ||
+    dokku config:get "$APP" RAILS_ENV ||
+    echo 'production'
+  )
   REVISION=$(cd $DOKKU_ROOT/$APP && git log -n 1 --pretty=format:"%H" 2>/dev/null)
   LOCAL_USERNAME=`whoami`
 
