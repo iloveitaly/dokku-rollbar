@@ -9,8 +9,8 @@ if [[ $ROLLBAR_TOKEN ]]; then
 
   ENVIRONMENT=$(
     dokku config:get "$APP" ROLLBAR_ENV ||
-    dokku config:get "$APP" RACK_ENV ||
     dokku config:get "$APP" RAILS_ENV ||
+    dokku config:get "$APP" RACK_ENV ||
     echo 'production'
   )
   REVISION=$(cd $DOKKU_ROOT/$APP && git log -n 1 --pretty=format:"%H" 2>/dev/null)
