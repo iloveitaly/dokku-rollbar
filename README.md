@@ -12,8 +12,22 @@ $ dokku plugin:install https://github.com/iloveitaly/dokku-rollbar.git
 ```
 
 The plugin pulls the Rollbar access token from your app's `ROLLBAR_TOKEN` and
-your environment from `RAILS_ENV`. The app environment will default to `production`
-if `RAILS_ENV` is not found
+your environment from `ROLLBAR_ENV`, `RAILS_ENV` or `RACK_ENV`. The app environment
+will default to `production` if none of them is not set.
+
+## Dependencies
+
+There is an issue with the way old versions extract the git commit hash
+(see [#4](https://github.com/iloveitaly/dokku-rollbar/issues/4))
+
+For now we use the `GIT_REV` variable set by [dokku-git-rev](https://github.com/dokku-community/dokku-git-rev)
+which is supposed to be part of dokku core in future versions.
+`dokku-rollbar` will work without the plugin installed, but will report an incorrect
+commit hash.
+
+```sh
+$ dokku plugin:install https://github.com/dokku-community/dokku-git-rev.git --name dokku-git-rev
+```
 
 ## Commands
 

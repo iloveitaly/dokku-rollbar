@@ -13,7 +13,14 @@ if [[ $ROLLBAR_TOKEN ]]; then
     dokku config:get "$APP" RACK_ENV ||
     echo 'production'
   )
-  REVISION=$(cd $DOKKU_ROOT/$APP && git log -n 1 --pretty=format:"%H" 2>/dev/null)
+
+  REVISION="$GIT_REV"
+  if [[ ! $REVISION ]]; then
+    echo "       WARNING: \$GIT_REV is not set - fall back to parsing git commit hash from git log"
+    echo "       You should install dokku-git-rev plugin to fix this error. See https://github.com/iloveitaly/dokku-rollbar/issues/4"
+    REVISION=$(cd $DOKKU_ROOT/$APP && git log -n 1 --pretty=format:"%H" 2>/dev/null)
+  fi
+
   LOCAL_USERNAME=`whoami`
 
   ROLLBAR_RESULT=$(curl -s https://api.rollbar.com/api/1/deploy/ \
