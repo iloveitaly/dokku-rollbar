@@ -17,13 +17,11 @@ will default to `production` if none of them is not set.
 
 ## Dependencies
 
-There is an issue with the way old versions extract the git commit hash
-(see [#4](https://github.com/iloveitaly/dokku-rollbar/issues/4))
+**As of Dokku 0.12, `GIT_REV` is set as a config value during a git deployment.**
 
-For now we use the `GIT_REV` variable set by [dokku-git-rev](https://github.com/dokku-community/dokku-git-rev)
-which is supposed to be part of dokku core in future versions.
-`dokku-rollbar` will work without the plugin installed, but will report an incorrect
-commit hash.
+For Dokku < 0.12, we use the `GIT_REV` variable set by [dokku-git-rev](https://github.com/dokku-community/dokku-git-rev).
+
+`dokku-rollbar` will work without the plugin installed, but will report an incorrect commit hash.
 
 ```sh
 $ dokku plugin:install https://github.com/dokku-community/dokku-git-rev.git --name dokku-git-rev
