@@ -21,11 +21,11 @@ will default to `production` if none of them is not set.
 
 For Dokku < 0.12, we use the `GIT_REV` variable set by [dokku-git-rev](https://github.com/dokku-community/dokku-git-rev).
 
-`dokku-rollbar` will work without the plugin installed, but will report an incorrect commit hash.
-
 ```sh
 $ dokku plugin:install https://github.com/dokku-community/dokku-git-rev.git --name dokku-git-rev
 ```
+
+`dokku-rollbar` will work without `GIT_REV` being available, but may report an incorrect commit hash.
 
 ## Commands
 
