@@ -3,6 +3,7 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 APP="$1"
 ROLLBAR_TOKEN=$(dokku config:get "$APP" ROLLBAR_TOKEN || echo)
+GIT_REV=$(dokku config:get "$APP" GIT_REV || echo "$GIT_REV")
 
 if [[ $ROLLBAR_TOKEN ]]; then
   echo "-----> Notifying Rollbar ..."
@@ -16,8 +17,8 @@ if [[ $ROLLBAR_TOKEN ]]; then
 
   REVISION="$GIT_REV"
   if [[ ! $REVISION ]]; then
-    echo "       WARNING: \$GIT_REV is not set - fall back to parsing git commit hash from git log"
-    echo "       You should install dokku-git-rev plugin to fix this error. See https://github.com/iloveitaly/dokku-rollbar/issues/4"
+    echo "       WARNING: \$GIT_REV is not available - falling back to parsing git commit hash from git log"
+    echo "       On Dokku < 0.12.0, install dokku-git-rev plugin to fix this error. See https://github.com/iloveitaly/dokku-rollbar/issues/4"
     REVISION=$(cd $DOKKU_ROOT/$APP && git log -n 1 --pretty=format:"%H" 2>/dev/null)
   fi
 
